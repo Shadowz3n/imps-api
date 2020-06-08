@@ -1,11 +1,9 @@
-FROM rust:1-slim-buster
+FROM rust:1.40 as builder
+WORKDIR /usr/src/imps-api
+COPY . .
+RUN cargo install --path .
 
-RUN apt-get update -y && apt-get -y install ca-certificates pkg-config libssl-dev libfreetype6-dev cmake gcc autoconf && rm -rf /var/lib/apt/lists/*
-
-COPY . /usr/src/api
-
-WORKDIR /usr/src/api
-
-EXPOSE 80:8000
-
-RUN cargo build --release && cargo run
+FROM debian:buster-slim
+RUN apt-get update -y && apt-get install -y extra-runtime-dependencies
+COPY --from=builder /usr/local/cargo/bin/imps-api /usr/local/bin/imps-api
+CMD ["imps-api"]
