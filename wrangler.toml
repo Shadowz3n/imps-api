@@ -1,0 +1,13 @@
+name = "imps-server"
+type = "webpack"
+account_id = "a10c2ad4319063fd412768a02c8d9fbb"
+zone_id = "08bc889cf9fc2aad3675401f3bc5436b"
+bucket = "./"
+route = "api.imps.com.br/*"
+
+kv-namespaces = [
+  { binding = "LOGS", id = "4680e6508d094f1aa93020c38297ccca" },
+]
+
+[site]
+bucket = "./public"
